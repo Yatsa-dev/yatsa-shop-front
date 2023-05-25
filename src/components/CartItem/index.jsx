@@ -15,7 +15,7 @@ const CartItem = item => {
         sx={{ alignContent: 'center', maxWidth: '280px', marginTop: '60px' }}
         key={item.id}
       >
-        <img src={item.file} alt={item.name} />
+        <img src={item.file} alt={item.name} width={320} />
         <Typography sx={{ fontSize: '18px', fontWeight: '400', color: '#000' }}>
           {item.name}
         </Typography>
