@@ -15,7 +15,7 @@ export class ProductsService {
   }
 
   async delete(productId) {
-    const { data } = await apiService.axiosPrivate.patch(
+    const { data } = await apiService.axiosPrivate.delete(
       `${DELETE_URL}/${productId}`,
     );
 

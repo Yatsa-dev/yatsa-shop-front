@@ -6,6 +6,10 @@ const createProductInitialized = createAction('createProduct/initialized');
 const createProductSuccessful = createAction('createProduct/successful');
 const deleteProductInitialized = createAction('deleteProduct/initialized');
 const deleteProductSuccessful = createAction('deleteProduct/successful');
+const addProductInitialized = createAction('addProduct/initialized');
+const addProductSuccessful = createAction('addProduct/successful');
+const removeProductInitialized = createAction('removeProduct/initialized');
+const removeProductSuccessful = createAction('removeProduct/successful');
 
 export const actions = {
   getProductsInitialized,
@@ -14,4 +18,8 @@ export const actions = {
   createProductSuccessful,
   deleteProductInitialized,
   deleteProductSuccessful,
+  addProductInitialized,
+  addProductSuccessful,
+  removeProductInitialized,
+  removeProductSuccessful,
 };

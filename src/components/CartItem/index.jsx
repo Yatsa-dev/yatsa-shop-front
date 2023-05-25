@@ -2,15 +2,11 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { thunks as productsThunks } from '../../store/products/products.thunks';
 import { useDispatch } from 'react-redux';
 
-const Item = (item, role) => {
+const CartItem = item => {
   const dispatch = useDispatch();
 
-  const add = productId => {
-    dispatch(productsThunks.add(productId));
-  };
-
-  const remove = productId => {
-    dispatch(productsThunks.remove(productId));
+  const clear = productId => {
+    dispatch(productsThunks.clear(productId));
   };
 
   return (
@@ -31,52 +27,34 @@ const Item = (item, role) => {
         >
           {item.description}
         </Typography>
+        <Typography
+          sx={{ fontSize: '16px', fontWeight: '600', color: '#515E65' }}
+        >
+          {item.count}x
+        </Typography>
 
         <Button
           variant="contained"
-          onClick={() => add(item.id)}
+          onClick={() => clear(item.id)}
           sx={{
-            marginRight: '10px',
             fontFamily: 'Poppins',
             textTransform: 'capitalize',
             fontSize: '15px',
             fontWeight: '500',
             height: '46px',
-            backgroundColor: '#0D76D7',
+            backgroundColor: '#EA4335',
             boxShadow: 'none',
             borderRadius: '5px',
             '&:hover': {
-              backgroundColor: '#2D95F5',
+              backgroundColor: 'rgba(234,67,53,0.8)',
               boxShadow: 'none',
             },
           }}
         >
-          Add
+          Delete
         </Button>
-        {role === 'admin' ? (
-          <Button
-            variant="contained"
-            onClick={() => remove(item.id)}
-            sx={{
-              fontFamily: 'Poppins',
-              textTransform: 'capitalize',
-              fontSize: '15px',
-              fontWeight: '500',
-              height: '46px',
-              backgroundColor: '#EA4335',
-              boxShadow: 'none',
-              borderRadius: '5px',
-              '&:hover': {
-                backgroundColor: 'rgba(234,67,53,0.8)',
-                boxShadow: 'none',
-              },
-            }}
-          >
-            Delete
-          </Button>
-        ) : null}
       </Box>
     </Grid>
   );
 };
-export default Item;
+export default CartItem;

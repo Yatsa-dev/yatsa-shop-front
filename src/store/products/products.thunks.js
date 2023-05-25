@@ -2,7 +2,7 @@ import to from 'await-to-js';
 import { actions as productsActions } from './products.actions';
 import { productsService } from '../../services/products/productsApiService';
 
-const create = formData => async dispatch => {
+const create = (formData, navigate) => async dispatch => {
   dispatch(productsActions.createProductInitialized());
 
   const [err, data] = await to(productsService.create(formData));
@@ -10,6 +10,7 @@ const create = formData => async dispatch => {
     return;
   } else {
     dispatch(productsActions.createProductSuccessful(data));
+    navigate('/');
   }
 };
 
@@ -31,12 +32,24 @@ const remove = productId => async dispatch => {
   if (err) {
     return;
   } else {
-    dispatch(productsActions.deleteProductSuccessful(data));
+    dispatch(productsActions.deleteProductSuccessful(productId));
   }
+};
+
+const add = productId => async dispatch => {
+  dispatch(productsActions.addProductInitialized());
+  dispatch(productsActions.addProductSuccessful(productId));
+};
+
+const clear = productId => async dispatch => {
+  dispatch(productsActions.removeProductInitialized());
+  dispatch(productsActions.removeProductSuccessful(productId));
 };
 
 export const thunks = {
   create,
   find,
   remove,
+  add,
+  clear,
 };

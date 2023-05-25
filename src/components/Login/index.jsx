@@ -52,7 +52,17 @@ const Login = () => {
   };
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <Box
+      sx={{
+        height: '100%',
+        textAlign: 'center',
+        width: '400px',
+        marginTop: '200px',
+        marginBottom: 'auto',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}
+    >
       <form onSubmit={formik.handleSubmit}>
         <FormControl
           sx={{ my: { xs: 2, md: 1, lg: 2 } }}

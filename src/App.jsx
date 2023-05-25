@@ -9,11 +9,16 @@ import { tokenSelector } from './store/auth/auth.selectors';
 import { errorSelector, loadingSelector } from './store/base/base.selectors';
 import Products from './components/Products';
 import Signup from './components/Signup';
-import Bucket from './components/Bucket';
 import NotFound from './components/PageNotFound';
-import CreateProductForm from './components/productForm';
-import { thunks as productThunsk } from './store/products/products.thunks';
-import { productsSelector } from './store/products/products.selectors';
+import CreateProductForm from './components/ProductForm';
+import { thunks as productsThunsk } from './store/products/products.thunks';
+import { thunks as usersThunks } from './store/user/user.thunks';
+import {
+  cartSelector,
+  productsSelector,
+} from './store/products/products.selectors';
+import { roleSelector } from './store/user/user.selectors';
+import Cart from './components/Cart';
 export const ColorModeContext = React.createContext({ App: () => {} });
 
 const App = () => {
@@ -21,12 +26,15 @@ const App = () => {
   const loading = useSelector(loadingSelector);
   const error = useSelector(errorSelector);
   const products = useSelector(productsSelector);
+  const role = useSelector(roleSelector);
+  const carts = useSelector(cartSelector);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (token) {
-      dispatch(productThunsk.find());
+      dispatch(productsThunsk.find());
+      dispatch(usersThunks.profile());
     }
   }, [token]);
 
@@ -60,9 +68,15 @@ const App = () => {
       <Routes>
         {token ? (
           <>
-            <Route path="/" element={<Products data={products} />}></Route>
+            <Route
+              path="/"
+              element={<Products data={products} role={role} />}
+            ></Route>
             <Route path="/create" element={<CreateProductForm />}></Route>
-            <Route path="/bucket" element={<Bucket />}></Route>
+            <Route
+              path="/cart"
+              element={<Cart data={carts} role={role} />}
+            ></Route>
             <Route path="*" element={<NotFound />} />
           </>
         ) : (
