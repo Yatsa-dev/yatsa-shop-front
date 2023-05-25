@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Backdrop, CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -9,7 +9,6 @@ import { tokenSelector } from './store/auth/auth.selectors';
 import { errorSelector, loadingSelector } from './store/base/base.selectors';
 import Products from './components/Products';
 import Signup from './components/Signup';
-import NotFound from './components/PageNotFound';
 import CreateProductForm from './components/ProductForm';
 import { thunks as productsThunsk } from './store/products/products.thunks';
 import { thunks as usersThunks } from './store/user/user.thunks';
@@ -75,13 +74,12 @@ const App = () => {
               path="/cart"
               element={<Cart data={carts} role={role} />}
             ></Route>
-            <Route path="*" element={<NotFound />} />
           </>
         ) : (
           <>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </>
         )}
       </Routes>
