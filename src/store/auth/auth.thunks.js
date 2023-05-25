@@ -36,8 +36,15 @@ const signup = (body, navigate) => async dispatch => {
   dispatch(authActions.signupSuccessful(data));
 };
 
+const logout = () => async dispatch => {
+  dispatch(authActions.logoutInitialized());
+
+  dispatch(authActions.logoutSuccessful());
+};
+
 export const thunks = {
   login,
   googleCred,
   signup,
+  logout,
 };
