@@ -12,8 +12,12 @@ const Cart = ({ data }) => {
 
   const costProducts = data => {
     let result = [];
-    data.forEach(el => result.push(el.price));
-    return result.reduce((a, b) => a + b, 0);
+    let total = [];
+    data.forEach(el => result.push({ price: el.price, count: el.count }));
+    for (const item of result) {
+      total.push(item.price * item.count);
+    }
+    return total.reduce((a, b) => a + b, 0);
   };
   return (
     <Box>

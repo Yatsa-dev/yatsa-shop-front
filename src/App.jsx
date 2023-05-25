@@ -1,9 +1,9 @@
-import './App.css';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, Backdrop, CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
-import React, { useEffect } from 'react';
+import './App.css';
 import Login from './components/Login';
 import { tokenSelector } from './store/auth/auth.selectors';
 import { errorSelector, loadingSelector } from './store/base/base.selectors';
@@ -19,9 +19,9 @@ import {
 } from './store/products/products.selectors';
 import { roleSelector } from './store/user/user.selectors';
 import Cart from './components/Cart';
-export const ColorModeContext = React.createContext({ App: () => {} });
 
 const App = () => {
+  const dispatch = useDispatch();
   const token = useSelector(tokenSelector);
   const loading = useSelector(loadingSelector);
   const error = useSelector(errorSelector);
@@ -29,14 +29,12 @@ const App = () => {
   const role = useSelector(roleSelector);
   const carts = useSelector(cartSelector);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (token) {
       dispatch(productsThunsk.find());
       dispatch(usersThunks.profile());
     }
-  }, [token]);
+  }, [dispatch, token]);
 
   return (
     <div className="App">

@@ -14,7 +14,7 @@ const Item = (item, role) => {
   };
 
   return (
-    <Grid item>
+    <Grid item key={item.id}>
       <Box
         sx={{ alignContent: 'center', maxWidth: '280px', marginTop: '60px' }}
         key={item.id}

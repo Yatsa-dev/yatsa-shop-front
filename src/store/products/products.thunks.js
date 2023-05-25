@@ -28,7 +28,7 @@ const find = () => async dispatch => {
 const remove = productId => async dispatch => {
   dispatch(productsActions.deleteProductInitialized());
 
-  const [err, data] = await to(productsService.delete(productId));
+  const [err] = await to(productsService.delete(productId));
   if (err) {
     return;
   } else {
