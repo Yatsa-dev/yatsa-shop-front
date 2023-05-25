@@ -18,13 +18,12 @@ import { MdShop } from 'react-icons/md';
 import { MdCloudUpload } from 'react-icons/md';
 
 const CreateProductForm = () => {
+  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const moveToProducts = () => {
     navigate('/');
   };
-
-  const [image, setImage] = useState(null);
 
   const onFile = e => {
     const [file] = e.target.files;
