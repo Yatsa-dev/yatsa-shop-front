@@ -14,6 +14,23 @@ const login = (body, navigate) => async dispatch => {
     dispatch(authActions.getAuthSuccessful(data));
   }
 };
+
+const refresh = body => async dispatch => {
+  dispatch(authActions.refreshInitialized());
+  const [err, data] = await to(authService.refresh(body));
+  if (err) {
+    dispatch(authActions.logoutSuccessful());
+  }
+  dispatch(authActions.refreshSuccessful(data));
+};
+
+const logout = () => async dispatch => {
+  dispatch(authActions.logoutInitialized());
+
+  localStorage.clear();
+  dispatch(authActions.logoutSuccessful());
+};
+
 const googleCred = (body, navigate) => async dispatch => {
   const [err, data] = await to(authService.google(body));
 
@@ -36,15 +53,10 @@ const signup = (body, navigate) => async dispatch => {
   dispatch(authActions.signupSuccessful(data));
 };
 
-const logout = () => async dispatch => {
-  dispatch(authActions.logoutInitialized());
-
-  dispatch(authActions.logoutSuccessful());
-};
-
 export const thunks = {
   login,
   googleCred,
   signup,
   logout,
+  refresh,
 };

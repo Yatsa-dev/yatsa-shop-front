@@ -14,10 +14,10 @@ const create = (formData, navigate) => async dispatch => {
   }
 };
 
-const find = () => async dispatch => {
+const find = param => async dispatch => {
   dispatch(productsActions.getProductsInitialized());
 
-  const [err, data] = await to(productsService.find());
+  const [err, data] = await to(productsService.find(param));
   if (err) {
     return;
   } else {
@@ -46,10 +46,34 @@ const clear = productId => async dispatch => {
   dispatch(productsActions.removeProductSuccessful(productId));
 };
 
+const findMarkets = () => async dispatch => {
+  dispatch(productsActions.marketsInitialized());
+
+  const [err, data] = await to(productsService.getMarkets());
+  if (err) {
+    return;
+  } else {
+    dispatch(productsActions.marketsSuccessful(data));
+  }
+};
+
+const addParam = param => async dispatch => {
+  dispatch(productsActions.addParamInitialized());
+  dispatch(productsActions.addParamSuccessful(param));
+};
+
+const removeParam = () => async dispatch => {
+  dispatch(productsActions.removeParamInitialized());
+  dispatch(productsActions.removeParamSuccessful());
+};
+
 export const thunks = {
   create,
   find,
   remove,
   add,
   clear,
+  findMarkets,
+  addParam,
+  removeParam,
 };

@@ -14,6 +14,8 @@ import { thunks as productsThunsk } from './store/products/products.thunks';
 import { thunks as usersThunks } from './store/user/user.thunks';
 import {
   cartSelector,
+  marketsSelector,
+  paramSelector,
   productsSelector,
 } from './store/products/products.selectors';
 import { roleSelector } from './store/user/user.selectors';
@@ -27,13 +29,17 @@ const App = () => {
   const products = useSelector(productsSelector);
   const role = useSelector(roleSelector);
   const carts = useSelector(cartSelector);
+  const markets = useSelector(marketsSelector);
+  const param = useSelector(paramSelector);
 
   useEffect(() => {
-    if (token) {
-      dispatch(productsThunsk.find());
-      dispatch(usersThunks.profile());
-    }
-  }, [dispatch, token]);
+    dispatch(usersThunks.profile());
+    dispatch(productsThunsk.findMarkets());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(productsThunsk.find(param));
+  }, [param]);
 
   return (
     <div className="App">
@@ -67,7 +73,9 @@ const App = () => {
           <>
             <Route
               path="/"
-              element={<Products data={products} role={role} />}
+              element={
+                <Products data={products} role={role} markets={markets} />
+              }
             ></Route>
             <Route path="/create" element={<CreateProductForm />}></Route>
             <Route

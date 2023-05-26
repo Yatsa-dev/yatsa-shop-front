@@ -10,6 +10,12 @@ const addProductInitialized = createAction('addProduct/initialized');
 const addProductSuccessful = createAction('addProduct/successful');
 const removeProductInitialized = createAction('removeProduct/initialized');
 const removeProductSuccessful = createAction('removeProduct/successful');
+const marketsInitialized = createAction('markets/initialized');
+const marketsSuccessful = createAction('markets/successful');
+const addParamInitialized = createAction('addParam/initialized');
+const addParamSuccessful = createAction('addParam/successful');
+const removeParamInitialized = createAction('removeParam/initialized');
+const removeParamSuccessful = createAction('removeParam/successful');
 
 export const actions = {
   getProductsInitialized,
@@ -22,4 +28,10 @@ export const actions = {
   addProductSuccessful,
   removeProductInitialized,
   removeProductSuccessful,
+  marketsInitialized,
+  marketsSuccessful,
+  addParamInitialized,
+  addParamSuccessful,
+  removeParamInitialized,
+  removeParamSuccessful,
 };

@@ -33,6 +33,7 @@ const CreateProductForm = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
+      market: '',
       price: '',
       description: '',
     },
@@ -43,6 +44,7 @@ const CreateProductForm = () => {
       dataFile.append('name', values.name);
       dataFile.append('price', values.price);
       dataFile.append('description', values.description);
+      dataFile.append('market', values.market);
 
       await dispatch(thunks.create(dataFile, navigate));
     },
@@ -101,6 +103,35 @@ const CreateProductForm = () => {
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
+            />
+          </FormControl>
+          <FormControl
+            sx={{ my: { xs: 2, md: 1, lg: 2 } }}
+            fullWidth
+            variant="outlined"
+          >
+            <FormHelperText
+              id="market"
+              sx={{
+                fontSize: '12px',
+                fontWeight: 600,
+                color: '#0A1E29',
+                pb: '8px',
+                m: 0,
+              }}
+            >
+              Market
+            </FormHelperText>
+            <TextField
+              sx={style.market}
+              fullWidth
+              id="market"
+              name="market"
+              placeholder="market"
+              value={formik.values.market}
+              onChange={formik.handleChange}
+              error={formik.touched.market && Boolean(formik.errors.market)}
+              helperText={formik.touched.market && formik.errors.market}
             />
           </FormControl>
           <FormControl

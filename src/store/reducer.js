@@ -9,7 +9,7 @@ import usersReducer from './user/user.reducer';
 const authPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['access_token', 'expires_at'],
+  whitelist: ['access_token', 'refresh_token', 'expires_at'],
 };
 
 const reducer = combineReducers({

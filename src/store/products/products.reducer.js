@@ -3,6 +3,8 @@ import { actions as productsActions } from './products.actions';
 const initialState = {
   products: [],
   cart: [],
+  markets: [],
+  param: null,
 };
 
 const productsReducer = (state = initialState, action) => {
@@ -12,25 +14,63 @@ const productsReducer = (state = initialState, action) => {
     case productsActions.getProductsSuccessful.type: {
       return {
         ...state,
-        products: [...state.products, ...action.payload],
+        products: [...action.payload],
       };
     }
     case productsActions.createProductInitialized.type:
       return state;
     case productsActions.createProductSuccessful.type:
       const prev = state.products;
+      const prevMarkets = state.markets;
+      const market = prevMarkets.find(i => i.market === action.payload.market);
+      market.count += 1;
+      const lateMarkers = prevMarkets.filter(
+        x => x.id !== action.payload.market,
+      );
+
       return {
         ...state,
         products: [...prev, action.payload],
+        markets: [...lateMarkers],
       };
     case productsActions.deleteProductInitialized.type:
       return state;
     case productsActions.deleteProductSuccessful.type:
       const data = state.products;
       const items = data.filter(x => x.id !== action.payload);
+      const markets = state.markets;
+      const one = data.find(i => i.id === action.payload);
+      let newMarket;
+      markets.forEach(x => {
+        const fined = x.market === one.market;
+        if (fined) {
+          newMarket = x;
+          newMarket.count -= 1;
+        }
+        return newMarket;
+      });
+      const lateM = markets.filter(i => i.market !== newMarket.market);
+
       return {
         ...state,
         products: items,
+        markets: [...lateM, newMarket],
+      };
+
+    case productsActions.addParamInitialized.type:
+      return state;
+    case productsActions.addParamSuccessful.type:
+      return {
+        ...state,
+        param: action.payload,
+      };
+
+    case productsActions.removeParamInitialized.type:
+      return state;
+    case productsActions.removeParamSuccessful.type:
+      return {
+        ...state,
+        param: null,
       };
 
     case productsActions.addProductInitialized.type:
@@ -55,6 +95,15 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         cart: [...state.cart, finedFromProduct],
       };
+
+    case productsActions.marketsInitialized.type:
+      return state;
+    case productsActions.marketsSuccessful.type: {
+      return {
+        ...state,
+        markets: [...state.markets, ...action.payload],
+      };
+    }
 
     case productsActions.removeProductInitialized.type:
       return state;

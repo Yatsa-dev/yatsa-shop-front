@@ -6,6 +6,8 @@ const signupInitialized = createAction('signup/initialized');
 const signupSuccessful = createAction('signup/successful');
 const logoutInitialized = createAction('logout/initialized');
 const logoutSuccessful = createAction('logout/successful');
+const refreshInitialized = createAction('refresh/initialized');
+const refreshSuccessful = createAction('refresh/successful');
 
 export const actions = {
   getAuthInitialized,
@@ -14,4 +16,6 @@ export const actions = {
   signupSuccessful,
   logoutInitialized,
   logoutSuccessful,
+  refreshInitialized,
+  refreshSuccessful,
 };

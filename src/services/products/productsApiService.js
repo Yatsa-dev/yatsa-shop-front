@@ -1,5 +1,5 @@
 import * as apiService from '../utils/apiService';
-import { CREATE_URL, FIND_URL, DELETE_URL } from './constants';
+import { CREATE_URL, FIND_URL, DELETE_URL, MARKETS_URL } from './constants';
 
 export class ProductsService {
   async create(formData) {
@@ -8,8 +8,18 @@ export class ProductsService {
     return data;
   }
 
-  async find() {
-    const { data } = await apiService.axiosPublic.get(FIND_URL);
+  async find(param) {
+    const { data } = await apiService.axiosPublic.get(FIND_URL, {
+      params: {
+        market: param,
+      },
+    });
+
+    return data;
+  }
+
+  async getMarkets() {
+    const { data } = await apiService.axiosPublic.get(MARKETS_URL);
 
     return data;
   }
