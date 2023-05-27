@@ -51,7 +51,11 @@ const CreateProductForm = () => {
   });
 
   return (
-    <>
+    <Box
+      sx={{
+        position: 'relative',
+      }}
+    >
       <Button
         sx={{
           position: 'absolute',
@@ -69,7 +73,7 @@ const CreateProductForm = () => {
           height: '100%',
           textAlign: 'center',
           width: '400px',
-          marginTop: '200px',
+          paddingTop: '200px',
           marginBottom: 'auto',
           marginLeft: 'auto',
           marginRight: 'auto',
@@ -251,7 +255,7 @@ const CreateProductForm = () => {
           </Button>
         </form>
       </Box>
-    </>
+    </Box>
   );
 };
 

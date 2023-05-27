@@ -27,8 +27,8 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      username: 'admin',
+      password: 'admin',
     },
     validationSchema: validationSchema,
     onSubmit: async values => {
@@ -156,7 +156,7 @@ const Login = () => {
             },
           }}
         >
-          Log In
+          Login
         </Button>
       </form>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -180,7 +180,7 @@ const Login = () => {
           }}
         >
           <GOOGLE style={{ marginRight: '20px' }} />
-          Log In with Google
+          Login with Google
         </Button>
       </Box>
 
