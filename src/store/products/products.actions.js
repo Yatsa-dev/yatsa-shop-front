@@ -16,6 +16,8 @@ const addParamInitialized = createAction('addParam/initialized');
 const addParamSuccessful = createAction('addParam/successful');
 const removeParamInitialized = createAction('removeParam/initialized');
 const removeParamSuccessful = createAction('removeParam/successful');
+const clearMarketsInitialized = createAction('clearMarkets/initialized');
+const clearMarketsSuccessful = createAction('clearMarkets/successful');
 
 export const actions = {
   getProductsInitialized,
@@ -34,4 +36,6 @@ export const actions = {
   addParamSuccessful,
   removeParamInitialized,
   removeParamSuccessful,
+  clearMarketsInitialized,
+  clearMarketsSuccessful,
 };

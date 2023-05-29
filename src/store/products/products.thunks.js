@@ -31,9 +31,9 @@ const remove = productId => async dispatch => {
   const [err] = await to(productsService.delete(productId));
   if (err) {
     return;
-  } else {
-    dispatch(productsActions.deleteProductSuccessful(productId));
   }
+
+  dispatch(productsActions.deleteProductSuccessful(productId));
 };
 
 const add = productId => async dispatch => {

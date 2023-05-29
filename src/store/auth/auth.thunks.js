@@ -2,6 +2,9 @@ import to from 'await-to-js';
 import { actions as authActions } from './auth.actions';
 import { authService } from '../../services/auth/authApiService';
 import { addError } from '../base/base.thunks';
+import { thunks as usersThunks } from '../user/user.thunks';
+import { actions as userActions } from '../user/user.actions';
+import { actions as productsActions } from '../products/products.actions';
 
 const login = (body, navigate) => async dispatch => {
   dispatch(authActions.getAuthInitialized());
@@ -9,9 +12,12 @@ const login = (body, navigate) => async dispatch => {
   const [err, data] = await to(authService.login(body));
   if (err) {
     return;
-  } else {
+  } else if (data) {
     navigate('/');
-    dispatch(authActions.getAuthSuccessful(data));
+    const res = await dispatch(authActions.getAuthSuccessful(data));
+    if (res) {
+      dispatch(usersThunks.profile());
+    }
   }
 };
 
@@ -27,7 +33,10 @@ const refresh = body => async dispatch => {
 const logout = () => async dispatch => {
   dispatch(authActions.logoutInitialized());
 
-  localStorage.clear();
+  localStorage.removeItem('persist:root');
+
+  dispatch(userActions.clearDataProfileSuccessful());
+  dispatch(productsActions.clearMarketsSuccessful());
   dispatch(authActions.logoutSuccessful());
 };
 

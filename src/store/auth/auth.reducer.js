@@ -45,6 +45,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         access_token: null,
         expires_at: null,
+        refresh_token: null,
       };
 
     default:

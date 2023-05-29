@@ -21,6 +21,18 @@ const usersReducer = (state = initialState, action) => {
       };
     }
 
+    case usersActions.clearDataProfileInitialized.type:
+      return state;
+    case usersActions.clearDataProfileSuccessful.type: {
+      return {
+        ...state,
+        id: null,
+        email: null,
+        username: null,
+        role: null,
+      };
+    }
+
     default:
       return state;
   }

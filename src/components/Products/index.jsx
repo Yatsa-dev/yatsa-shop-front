@@ -1,5 +1,5 @@
 import Item from '../ProductItem';
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineShoppingCart, MdCreate, MdLogout } from 'react-icons/md';
 import { thunks as authThunks } from '../../store/auth/auth.thunks';

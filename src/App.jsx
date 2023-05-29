@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -33,9 +34,11 @@ const App = () => {
   const param = useSelector(paramSelector);
 
   useEffect(() => {
-    dispatch(usersThunks.profile());
-    dispatch(productsThunsk.findMarkets());
-  }, [dispatch]);
+    if (token) {
+      dispatch(usersThunks.profile());
+      dispatch(productsThunsk.findMarkets());
+    }
+  }, [token]);
 
   useEffect(() => {
     dispatch(productsThunsk.find(param));
@@ -82,6 +85,7 @@ const App = () => {
               path="/cart"
               element={<Cart data={carts} role={role} />}
             ></Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (
           <>

@@ -21,40 +21,58 @@ const productsReducer = (state = initialState, action) => {
       return state;
     case productsActions.createProductSuccessful.type:
       const prev = state.products;
-      const prevMarkets = state.markets;
-      const market = prevMarkets.find(i => i.market === action.payload.market);
-      market.count += 1;
-      const lateMarkers = prevMarkets.filter(
-        x => x.id !== action.payload.market,
-      );
+      const prevMarkets = state?.markets;
+      let response;
+      if (prevMarkets) {
+        prevMarkets.forEach(i => {
+          if (i?.market === action.payload.market) {
+            response = Object.assign(i);
+            response.count += 1;
+            return response;
+          } else {
+            response = { market: action.payload.market, count: 1 };
 
-      return {
-        ...state,
-        products: [...prev, action.payload],
-        markets: [...lateMarkers],
-      };
+            return response;
+          }
+        });
+        const lateMarkers = prevMarkets?.filter(
+          x => x?.id !== action.payload.market,
+        );
+        return {
+          ...state,
+          products: [...prev, action.payload],
+          markets: [...lateMarkers, response],
+        };
+      } else {
+        return {
+          ...state,
+          products: [...prev, action.payload],
+          markets: [response],
+        };
+      }
+
     case productsActions.deleteProductInitialized.type:
       return state;
     case productsActions.deleteProductSuccessful.type:
-      const data = state.products;
-      const items = data.filter(x => x.id !== action.payload);
       const markets = state.markets;
-      const one = data.find(i => i.id === action.payload);
+
+      const items = state.products.filter(x => x.id !== action.payload);
+
+      const obj = state.products.find(i => i.id === action.payload);
+
       let newMarket;
       markets.forEach(x => {
-        const fined = x.market === one.market;
+        const fined = x.market === obj?.market;
         if (fined) {
-          newMarket = x;
+          newMarket = Object.assign(x);
           newMarket.count -= 1;
+          return newMarket;
         }
-        return newMarket;
       });
-      const lateM = markets.filter(i => i.market !== newMarket.market);
-
       return {
         ...state,
         products: items,
-        markets: [...lateM, newMarket],
+        markets: [...markets],
       };
 
     case productsActions.addParamInitialized.type:
@@ -71,6 +89,14 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         param: null,
+      };
+
+    case productsActions.clearMarketsInitialized.type:
+      return state;
+    case productsActions.clearMarketsSuccessful.type:
+      return {
+        ...state,
+        markets: [],
       };
 
     case productsActions.addProductInitialized.type:
