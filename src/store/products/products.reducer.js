@@ -23,33 +23,26 @@ const productsReducer = (state = initialState, action) => {
       const prev = state.products;
       const prevMarkets = state?.markets;
       let response;
-      if (prevMarkets) {
-        prevMarkets.forEach(i => {
-          if (i?.market === action.payload.market) {
-            response = Object.assign(i);
-            response.count += 1;
-            return response;
-          } else {
-            response = { market: action.payload.market, count: 1 };
 
-            return response;
-          }
-        });
-        const lateMarkers = prevMarkets?.filter(
-          x => x?.id !== action.payload.market,
-        );
-        return {
-          ...state,
-          products: [...prev, action.payload],
-          markets: [...lateMarkers, response],
-        };
-      } else {
-        return {
-          ...state,
-          products: [...prev, action.payload],
-          markets: [response],
-        };
-      }
+      prevMarkets.forEach(i => {
+        if (i?.market === action.payload.market) {
+          response = Object.assign(i);
+          response.count += 1;
+          return response;
+        }
+      });
+      const lateMarkers = prevMarkets?.filter(
+        x => x?.id !== action.payload.market,
+      );
+
+      return {
+        ...state,
+        products: [...prev, action.payload],
+        markets:
+          prevMarkets.length === 0
+            ? [{ market: action.payload.market, count: 1 }]
+            : [...lateMarkers],
+      };
 
     case productsActions.deleteProductInitialized.type:
       return state;
